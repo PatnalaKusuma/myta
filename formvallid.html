@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color:#b2b2b2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            height: 700px;
+        }
+       
+
+        form {
+            background-color: #b5e7a0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            margin: auto;
+        }
+        h2{
+            margin-top: 5px;
+            text-align: left;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .form {
+        width: 70%; /* Adjust the percentage or use a specific value like "500px" */
+        max-width: 400px; /* You can set a maximum width if needed */
+        margin: auto;
+        height: 50%;
+    }
+    </style>
+</head>
+<body>
+
+    <div id="registration-container">
+        <h2>Student Registration Form</h2>
+
+        <form id="registrationForm" onsubmit="return validateForm()">
+            <table>
+                <tr>
+                    <th><label for="firstName">First Name:</label></th>
+                    <td><input type="text" id="firstName" name="firstName" required></td>
+                    <td><span id="firstNameError" class="error"></span></td>
+                </tr>
+                <tr>
+                    <th><label for="lastName">Last Name:</label></th>
+                    <td><input type="text" id="lastName" name="lastName" required></td>
+                    <td><span id="lastNameError" class="error"></span></td>
+                </tr>
+                <tr>
+                    <th><label for="email">Email:</label></th>
+                    <td><input type="email" id="email" name="email" required></td>
+                    <td><span id="emailError" class="error"></span></td>
+                </tr>
+                <tr>
+                    <th><label for="age">Age:</label></th>
+                    <td><input type="number" id="age" name="age" required></td>
+                    <td><span id="ageError" class="error"></span></td>
+                </tr>
+                <tr>
+                    <th><label for="course">Course:</label></th>
+                    <td>
+                        <select id="course" name="course" required>
+                            <option value="">Select a course</option>
+                            <option value="Math">CSE</option>
+                            <option value="Science">ECE</option>
+                            <option value="History">MECH</option>
+                            <option value="History">CIVIL</option>
+                            <option value="History">EEE</option>
+                        </select>
+                    </td>
+                    <td><span id="courseError" class="error"></span></td>
+                </tr>
+                <tr>
+                    <th><label for="gender">Gender:</label></th>
+                    <td>
+                        <select id="gender" name="gender" required>
+                            <option value="">Select gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </td>
+                    <td><span id="genderError" class="error"></span></td>
+                </tr>
+                <tr>
+                    <th><label for="address">Address:</label></th>
+                    <td><textarea id="address" name="address" rows="4" required></textarea></td>
+                    <td><span id="addressError" class="error"></span></td>
+                </tr>
+                <tr>
+                    <th>
+                        <label>
+                            <input type="checkbox" id="terms" name="terms" required>
+                            I accept the terms and conditions
+                        </label>
+                    </th>
+                    <td colspan="2"><span id="termsError" class="error"></span></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align: center;">
+                        <input type="submit" value="Register">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            var firstName = document.getElementById('firstName').value;
+            var lastName = document.getElementById('lastName').value;
+            var email = document.getElementById('email').value;
+            var age = document.getElementById('age').value;
+            var course = document.getElementById('course').value;
+            var gender = document.getElementById('gender').value;
+            var address = document.getElementById('address').value;
+            var terms = document.getElementById('terms').checked;
+
+            var firstNameError = document.getElementById('firstNameError');
+            var lastNameError = document.getElementById('lastNameError');
+            var emailError = document.getElementById('emailError');
+            var ageError = document.getElementById('ageError');
+            var courseError = document.getElementById('courseError');
+            var genderError = document.getElementById('genderError');
+            var addressError = document.getElementById('addressError');
+            var termsError = document.getElementById('termsError');
+
+            var isValid = true;
+
+            // Validate First Name
+            if (firstName.trim() === "") {
+                firstNameError.innerHTML = "First Name is required";
+                isValid = false;
+            } else {
+                firstNameError.innerHTML = "";
+            }
+
+            // Validate Last Name
+            if (lastName.trim() === "") {
+                lastNameError.innerHTML = "Last Name is required";
+                isValid = false;
+            } else {
+                lastNameError.innerHTML = "";
+            }
+
+            // Validate Email
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                emailError.innerHTML = "Invalid email format";
+                isValid = false;
+            } else {
+                emailError.innerHTML = "";
+            }
+
+            // Validate Age
+            if (isNaN(age) || age <= 0) {
+                ageError.innerHTML = "Invalid age";
+                isValid = false;
+            } else {
+                ageError.innerHTML = "";
+            }
+
+            // Validate Course
+            if (course === "") {
+                courseError.innerHTML = "Please select a course";
+                isValid = false;
+            } else {
+                courseError.innerHTML = "";
+            }
+
+            // Validate Gender
+            if (gender === "") {
+                genderError.innerHTML = "Please select a gender";
+                isValid = false;
+            } else {
+                genderError.innerHTML = "";
+            }
+
+         }
+  </script>
+</body>
+</html> 
